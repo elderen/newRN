@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextInput, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { TextInput, View, Text, StyleSheet, TouchableOpacity, Linking } from 'react-native';
 import axios from 'axios'
 
 // create a component
@@ -10,8 +10,7 @@ export default class Home extends Component {
     }
   }
   state = {
-    input: '',
-    result: ''
+    input: ''
   }
   constructor(props) {
     super(props)
@@ -21,7 +20,13 @@ export default class Home extends Component {
   buttonOne = () => {
     // alert('button 1')
     axios.post('http://localhost:3000/search', { input: this.state.input })
-    this.props.navigation.navigate('Result')
+      .then((response) => {
+        // alert(response.data)
+        this.props.navigation.navigate('Result', { data: response.data })
+      })
+      .catch((err) => {
+        alert(err)
+      })
   }
 
   render() {
@@ -43,9 +48,14 @@ export default class Home extends Component {
           style={styles.buttonContainer}
           onPress={this.buttonOne}
         >
-          <Text style={styles.button}>Button</Text>
+          <Text style={styles.button}>Button 1</Text>
         </TouchableOpacity>
-        <Text>{this.state.result}</Text>
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={() => Linking.openURL('http://www.anthem.com')}
+        >
+          <Text style={styles.button}>Button 2</Text>
+        </TouchableOpacity>
       </View>
     );
   }
