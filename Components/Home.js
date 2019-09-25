@@ -18,8 +18,8 @@ export default class Home extends Component {
   }
 
   buttonOne = () => {
-    // alert('button 1')
-    axios.post('http://localhost:3000/search', { input: this.state.input })
+    // axios.post('http://localhost:3000/search', { input: this.state.input })
+    axios.post('https://newrnserver.herokuapp.com/search', { input: this.state.input })
       .then((response) => {
         // alert(response.data)
         this.props.navigation.navigate('Result', { data: response.data })
