@@ -1,12 +1,12 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Linking } from 'react-native';
-import WebView from './WebView'
+import { View, Text, StyleSheet, TouchableOpacity, Linking, ScrollView } from 'react-native';
+import axios from 'axios'
 
 // create a component
 class Result extends Component {
   static navigationOptions = {
-    headerTitle: 'Result',
+    headerTitle: 'Results',
     headerRight: (
       <TouchableOpacity
         style={{
@@ -23,14 +23,32 @@ class Result extends Component {
       </TouchableOpacity>
     ),
   };
+
   render() {
-    let data = JSON.stringify(this.props.navigation.getParam('data', 'NO-DATA'));
+    let data = this.props.navigation.getParam('data', 'NO-DATA');
+    // alert(data)
     return (
       <View style={styles.container}>
-        <Text>Results for "{data}"</Text>
-        {/* {data[1].map((link)=>{
-          <Text>{link}</Text>
-        })} */}
+        <ScrollView>
+          {/* <Text style={{fontSize: 16}}>{data}</Text> */}
+          {data.map((unit) => {
+            if (unit !== data[data.length - 1]) {
+              return <Text style={{ alignSelf: 'flex-start', margin: 5 }} key={unit}>{unit}</Text>
+            } else {
+              return unit.map((link) => {
+                return <Text
+                  style={{
+                    color: 'darkblue',
+                    alignSelf: 'flex-start',
+                    margin: 6
+                  }}
+                  key={link}
+                  onPress={() => { Linking.openURL(link) }}
+                >{link}</Text>
+              })
+            }
+          })}
+        </ScrollView>
       </View>
     );
   }
@@ -40,9 +58,10 @@ class Result extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: 'white',
+    margin: 10
   }
 });
 

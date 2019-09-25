@@ -48,13 +48,7 @@ export default class Home extends Component {
           style={styles.buttonContainer}
           onPress={this.buttonOne}
         >
-          <Text style={styles.button}>Button 1</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.buttonContainer}
-          onPress={() => Linking.openURL('http://www.anthem.com')}
-        >
-          <Text style={styles.button}>Button 2</Text>
+          <Text style={styles.button}>Search</Text>
         </TouchableOpacity>
       </View>
     );
